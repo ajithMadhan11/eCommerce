@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Category" representedClassName="Category" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="Transformable" customClassName="UIColor"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String" customClassName="String"/>
+    </entity>
+    <entity name="Comments" representedClassName=".Comments" syncable="YES">
+        <attribute name="comment" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="star" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="productsCommented" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="reviews" inverseEntity="Product"/>
+    </entity>
+    <entity name="Coupons" representedClassName=".Coupons" syncable="YES">
+        <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="discount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="treshHold" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="userApplied" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="appliedCoupons" inverseEntity="User"/>
+    </entity>
+    <entity name="CustomList" representedClassName="CustomList" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="productlList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="associatedList" inverseEntity="Product"/>
+        <relationship name="userAssociated" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="cList" inverseEntity="User"/>
+    </entity>
+    <entity name="Orders" representedClassName="Orders" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="orderId" optional="YES" attributeType="String"/>
+        <attribute name="paymentMode" optional="YES" attributeType="Transformable" customClassName="paymentMethods"/>
+        <attribute name="total" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="orders" inverseEntity="Product"/>
+        <relationship name="userOrders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="previousOrder" inverseEntity="User"/>
+    </entity>
+    <entity name="Product" representedClassName="Product" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String" customClassName="[Category]"/>
+        <attribute name="fiveStar" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="fourStar" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="images" optional="YES" attributeType="String"/>
+        <attribute name="nutritions" optional="YES" attributeType="String"/>
+        <attribute name="offer" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="oneStar" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="productDetails" optional="YES" attributeType="String"/>
+        <attribute name="quantitiesSelected" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="quantityDetails" optional="YES" attributeType="String"/>
+        <attribute name="review" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="threeStar" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="twoStar" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="associatedList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CustomList" inverseName="productlList" inverseEntity="CustomList"/>
+        <relationship name="broughtBy" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="cart" inverseEntity="User"/>
+        <relationship name="orders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Orders" inverseName="items" inverseEntity="Orders"/>
+        <relationship name="reviewedBy" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="reviewedProducts" inverseEntity="User"/>
+        <relationship name="reviews" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comments" inverseName="productsCommented" inverseEntity="Comments"/>
+        <relationship name="searchedBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="recentSearches" inverseEntity="User"/>
+        <relationship name="userFavourites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="favourites" inverseEntity="User"/>
+    </entity>
+    <entity name="RecentText" representedClassName=".RecentText" syncable="YES">
+        <attribute name="search" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" customClassName="Address"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="password" optional="YES" attributeType="String"/>
+        <attribute name="phone" optional="YES" attributeType="String"/>
+        <attribute name="recentText" optional="YES" attributeType="Transformable" customClassName="[NSString]"/>
+        <attribute name="userImage" optional="YES" attributeType="Binary"/>
+        <relationship name="appliedCoupons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Coupons" inverseName="userApplied" inverseEntity="Coupons"/>
+        <relationship name="cart" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="broughtBy" inverseEntity="Product"/>
+        <relationship name="cList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CustomList" inverseName="userAssociated" inverseEntity="CustomList"/>
+        <relationship name="favourites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="userFavourites" inverseEntity="Product"/>
+        <relationship name="previousOrder" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Orders" inverseName="userOrders" inverseEntity="Orders"/>
+        <relationship name="recentSearches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="searchedBy" inverseEntity="Product"/>
+        <relationship name="reviewedProducts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="reviewedBy" inverseEntity="Product"/>
+    </entity>
+    <elements>
+        <element name="Category" positionX="27.0997314453125" positionY="-355.5263977050781" width="128" height="74"/>
+        <element name="Comments" positionX="234" positionY="-279" width="128" height="119"/>
+        <element name="Coupons" positionX="234" positionY="-279" width="128" height="89"/>
+        <element name="CustomList" positionX="67.312744140625" positionY="-249.3303527832031" width="128" height="88"/>
+        <element name="Orders" positionX="554.2904663085938" positionY="-109.20849609375" width="128" height="119"/>
+        <element name="Product" positionX="283.517578125" positionY="-438.6111907958984" width="180.3848266601562" height="373"/>
+        <element name="RecentText" positionX="234" positionY="-279" width="128" height="44"/>
+        <element name="User" positionX="56.117431640625" positionY="-92.18218994140625" width="128" height="239"/>
+    </elements>
+</model>
